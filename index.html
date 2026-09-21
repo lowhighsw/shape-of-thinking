@@ -9,6 +9,7 @@
   올리는 법: 이 파일 하나를 정적 호스팅(GitHub Pages, Netlify, Render 등)에 올리면 됩니다.
 -->
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<script>try{var aN=(new URLSearchParams(location.search)).get("art")||localStorage.getItem("shape.art");if(aN==="monet"||aN==="sorolla")document.documentElement.setAttribute("data-art",aN)}catch(e){}</script>
 <title>생각이 피는 모양 — 청소년 AI 사용 실태와 의존도</title>
 <meta name="description" content="‘청소년 AI 사용 실태와 의존도’ 설문 응답 43건을 그대로 집계해 보여 주는 웹사이트. 답 하나하나가 꽃잎이 됩니다.">
 <meta property="og:type" content="website">
@@ -27,6 +28,7 @@
   --line:rgba(35,36,89,.18); --card:rgba(255,255,255,.55); --card-b:rgba(35,36,89,.10); --field:rgba(255,255,255,.6);
   --accent:#c0505c;
   --p0:#4254c2; --p1:#62a9d0; --p2:#d2ebe0; --vein:rgba(35,36,89,.30); --dot:#4254c2;
+  --shade:#232459; --hi:#ffffff; --core:#2f3fae; --anther:#f2c14e; --filament:#e8dfae; --freckle:#232459;
   --serif:"Cormorant Garamond","Noto Serif KR","Noto Serif CJK KR","AppleMyungjo","Batang",serif;
   --sans:"Noto Sans KR","Noto Sans CJK KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
   color-scheme:light;
@@ -39,6 +41,7 @@
     --line:rgba(190,200,255,.22); --card:rgba(255,255,255,.06); --card-b:rgba(190,200,255,.16); --field:rgba(255,255,255,.07);
     --accent:#f0a0a8;
     --p0:#8fa4ff; --p1:#63c8d6; --p2:#c3f0da; --vein:rgba(255,255,255,.38); --dot:#a5b4ff;
+    --shade:#0b0f2e; --hi:#f2f6ff; --core:#6d82ff; --anther:#f7d36a; --filament:#f2eac0; --freckle:#0b0f2e;
     color-scheme:dark;
   }
 }
@@ -48,8 +51,31 @@
   --line:rgba(190,200,255,.22); --card:rgba(255,255,255,.06); --card-b:rgba(190,200,255,.16); --field:rgba(255,255,255,.07);
   --accent:#f0a0a8;
   --p0:#8fa4ff; --p1:#63c8d6; --p2:#c3f0da; --vein:rgba(255,255,255,.38); --dot:#a5b4ff;
+  --shade:#0b0f2e; --hi:#f2f6ff; --core:#6d82ff; --anther:#f7d36a; --filament:#f2eac0; --freckle:#0b0f2e;
   color-scheme:dark;
 }
+/* 화풍: 제공된 모네·소로야 그림에서 뽑은 색 */
+:root[data-art="monet"]{
+  --bg-a:#1c352f; --bg-b:#28483f; --bar:rgba(20,42,37,.84);
+  --ink:#f5edd6; --ink-2:#d5d3b6; --ink-3:#a9baa4;
+  --line:rgba(245,237,214,.24); --card:rgba(14,32,29,.64); --card-b:rgba(245,237,214,.16); --field:rgba(245,237,214,.09);
+  --accent:#ee9c84;
+  --p0:#f0b84a; --p1:#f7e3a1; --p2:#ee9c88; --pstroke:#7a63a6; --vein:rgba(110,80,120,.5); --dot:#cfe3d3;
+  --shade:#5a3a70; --hi:#fff6d8; --core:#e8892d; --anther:#d9682f; --filament:#f7e3a1; --freckle:#b5523f;
+  color-scheme:dark;
+}
+:root[data-art="sorolla"]{
+  --bg-a:#eef2fb; --bg-b:#d6dff3; --bar:rgba(238,242,251,.84);
+  --ink:#1d2a5b; --ink-2:#3c4f86; --ink-3:#4f5d8f;
+  --line:rgba(29,42,91,.22); --card:rgba(255,255,255,.7); --card-b:rgba(29,42,91,.12); --field:rgba(255,255,255,.72);
+  --accent:#b8505f;
+  --p0:#3f62b0; --p1:#8fa7dc; --p2:#f4f6fc; --pstroke:#3f62b0; --vein:rgba(29,42,91,.35); --dot:#3f62b0;
+  --shade:#1d2a5b; --hi:#ffffff; --core:#2f4fa8; --anther:#e6b94f; --filament:#f4ecd0; --freckle:#3f62b0;
+  color-scheme:light;
+}
+#paint{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;display:none;filter:blur(.7px);transform:scale(1.02)}
+:root[data-art] #paint{display:block}
+:root[data-art] .bg{display:none}
 html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 70px)}
 *,*::before,*::after{box-sizing:border-box}
 [hidden]{display:none!important}
@@ -71,6 +97,11 @@ button{font-family:inherit;color:inherit}
 .icon-btn.share{display:grid;place-items:center;padding:0;border-color:var(--ink);color:var(--ink)}
 .urlbox{width:100%;padding:10px 12px;margin:2px 0 12px;border-radius:10px;border:1px solid var(--line);background:var(--field);color:var(--ink);font:400 16px var(--sans)}
 .help .row{margin-top:0}
+.artopts{display:grid;gap:8px}
+.artopts button{display:grid;grid-template-columns:34px 1fr;align-items:center;gap:0 10px;text-align:left;background:var(--field);border:1.5px solid var(--line);border-radius:12px;padding:8px 10px;font:700 14px/1.3 var(--sans);color:var(--ink);cursor:pointer}
+.artopts button i{grid-row:span 2;width:34px;height:34px;border-radius:50%;display:block}
+.artopts button small{font:400 12px var(--sans);color:var(--ink-3)}
+.artopts button[aria-pressed=true]{border-color:var(--ink)}
 .help{position:fixed;z-index:40;right:16px;top:calc(env(safe-area-inset-top,0px) + 66px);width:min(330px,calc(100vw - 32px));padding:16px 18px;background:var(--bg-a);border:1px solid var(--line);border-radius:6px 24px 6px 24px;box-shadow:0 12px 40px rgba(20,22,70,.2);font:400 14px/1.7 var(--sans);color:var(--ink)}
 .help p{margin:0 0 8px}.help p:last-child{margin:0}
 .row{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
@@ -121,10 +152,27 @@ svg.flower{display:block;width:100%;height:auto;overflow:visible}
 
 /* flower svg */
 .flower .pt{transform-origin:0 0;transition:transform 1s cubic-bezier(.2,.8,.2,1),opacity .5s}
-.flower .petal{fill:url(#pg);fill-opacity:.8;stroke:var(--p0);stroke-opacity:.35;stroke-width:.6;vector-effect:non-scaling-stroke}
-.flower .vein{fill:none;stroke:var(--vein);stroke-width:.8;vector-effect:non-scaling-stroke}
+.flower .petal{fill:url(#pg);fill-opacity:.9;stroke:var(--pstroke,var(--p0));stroke-opacity:.35;stroke-width:.6;vector-effect:non-scaling-stroke}
+:root[data-art] .flower .petal{stroke-opacity:.5;filter:url(#rough)}
+.flower .brush{display:none;fill:none;stroke:var(--p2);stroke-opacity:.55;stroke-width:2.2;stroke-linecap:round;vector-effect:non-scaling-stroke}
+:root[data-art] .flower .brush{display:block}
+.flower .vein{fill:none;stroke:var(--vein);stroke-width:.9;stroke-opacity:.75;stroke-linecap:round;vector-effect:non-scaling-stroke}
+.flower .shade{fill:url(#pgSh)}
+.flower .glow{fill:url(#pgBase)}
+.flower .tipglow{fill:url(#pgTip)}
+.flower .vl,.flower .vlat{fill:none;stroke:var(--vein);stroke-linecap:round;vector-effect:non-scaling-stroke}
+.flower .vl{stroke-width:.6;stroke-opacity:.7}
+.flower .vlat{stroke-width:.5;stroke-opacity:.5}
+.flower .frk{fill:none;stroke:var(--freckle);stroke-opacity:.5;stroke-width:1.5;stroke-dasharray:0 3.6;stroke-linecap:round;vector-effect:non-scaling-stroke}
+.flower .sheen{fill:none;stroke:var(--hi);stroke-opacity:.6;stroke-width:1.4;stroke-linecap:round;vector-effect:non-scaling-stroke}
+.flower .rim{fill:none;stroke:var(--p2);stroke-opacity:.5;stroke-width:.8;vector-effect:non-scaling-stroke}
+.flower.mini .vlat,.flower.mini .frk{display:none}
+.flower .stamens .fil{stroke:var(--filament);stroke-width:1.1;stroke-linecap:round;opacity:.95}
+.flower.mini .stamens .fil{stroke-width:.7}
+.flower .stamens .anther{fill:var(--anther)}
+.flower .stamens .coreglow{fill:url(#pgCore)}
 .flower .guide{stroke:var(--ink-3);stroke-opacity:.55;stroke-dasharray:1 5;stroke-linecap:round;stroke-width:1.3}
-.flower .core{fill:var(--p0)}
+.flower .core{fill:var(--anther)}
 .flower .dot{fill:var(--dot);opacity:.9;transition:fill .25s}
 .flower .dot.offc{fill:none;stroke:var(--ink-3);stroke-width:1.3}
 .flower .hit{fill:transparent}
@@ -219,9 +267,27 @@ body[data-view=poster] .rail,body[data-view=data] .rail{display:none!important}
     <linearGradient id="pgH" x1="0" y1="0" x2="1" y2="0">
       <stop offset="0" style="stop-color:var(--p0)"/><stop offset=".55" style="stop-color:var(--p1)"/><stop offset="1" style="stop-color:var(--p2)"/>
     </linearGradient>
+    <linearGradient id="pgSh" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" style="stop-color:var(--shade);stop-opacity:.34"/><stop offset=".4" style="stop-color:var(--shade);stop-opacity:0"/><stop offset=".7" style="stop-color:var(--hi);stop-opacity:0"/><stop offset="1" style="stop-color:var(--hi);stop-opacity:.45"/>
+    </linearGradient>
+    <radialGradient id="pgBase" gradientUnits="userSpaceOnUse" cx="0" cy="-2" r="38">
+      <stop offset="0" style="stop-color:var(--core);stop-opacity:.85"/><stop offset="1" style="stop-color:var(--core);stop-opacity:0"/>
+    </radialGradient>
+    <radialGradient id="pgTip" gradientUnits="userSpaceOnUse" cx="1" cy="-97" r="28">
+      <stop offset="0" style="stop-color:var(--hi);stop-opacity:.55"/><stop offset="1" style="stop-color:var(--hi);stop-opacity:0"/>
+    </radialGradient>
+    <radialGradient id="pgCore">
+      <stop offset="0" style="stop-color:var(--anther);stop-opacity:.95"/><stop offset="1" style="stop-color:var(--anther);stop-opacity:0"/>
+    </radialGradient>
+    <clipPath id="petalClip"><path d="M0 0C13 -17 19 -57 2 -95C-16 -60 -14 -20 0 0Z"/></clipPath>
+    <filter id="rough" x="-10%" y="-10%" width="120%" height="120%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="7" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="7" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
   </defs>
 </svg>
 <div class="bg" aria-hidden="true"></div>
+<canvas id="paint" aria-hidden="true"></canvas>
 
 <header class="top">
   <div class="brand">생각이 피는 모양</div>
@@ -232,6 +298,7 @@ body[data-view=poster] .rail,body[data-view=data] .rail{display:none!important}
     <button class="tab" role="tab" data-view="data" aria-selected="false">원자료</button>
   </nav>
   <div class="hbtns">
+    <button class="icon-btn share" id="art-btn" aria-label="화풍 고르기" aria-expanded="false" aria-controls="art-pop"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18c1.1 0 1.8-.9 1.5-1.9-.3-1 .3-2.1 1.5-2.1H17a4 4 0 0 0 4-4c0-5-4-10-9-10z"/><circle cx="7.5" cy="11" r="1" fill="currentColor"/><circle cx="10" cy="7" r="1" fill="currentColor"/><circle cx="15" cy="7" r="1" fill="currentColor"/></svg></button>
     <button class="icon-btn share" id="share-btn" aria-label="링크 공유" aria-expanded="false" aria-controls="share-pop"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="2.6"/><circle cx="6" cy="12" r="2.6"/><circle cx="18" cy="19" r="2.6"/><path d="M8.3 10.8l7.4-4.3M8.3 13.2l7.4 4.3"/></svg></button>
     <button class="icon-btn" id="help-btn" aria-label="꽃 읽는 법" aria-expanded="false" aria-controls="help">?</button>
   </div>
@@ -245,6 +312,16 @@ body[data-view=poster] .rail,body[data-view=data] .rail{display:none!important}
   <p><b>이 페이지 링크 공유</b></p>
   <input class="urlbox" id="share-url" type="text" readonly aria-label="공유할 링크">
   <div class="row"><button class="btn" id="share-copy">링크 복사</button><button class="btn ghost" id="share-native" hidden>공유하기</button></div>
+</div>
+
+<div class="help" id="art-pop" role="dialog" aria-label="화풍 고르기" hidden>
+  <p><b>화풍 고르기</b></p>
+  <div class="artopts">
+    <button data-art="basic" aria-pressed="true"><i style="background:linear-gradient(135deg,#4254c2,#62a9d0,#d2ebe0)"></i>기본<small>꽃잎 시각화</small></button>
+    <button data-art="monet" aria-pressed="false"><i style="background:linear-gradient(135deg,#1c352f,#308186,#f3d58a,#ee9c88)"></i>모네<small>수련 연못</small></button>
+    <button data-art="sorolla" aria-pressed="false"><i style="background:linear-gradient(135deg,#3f62b0,#a3b6e4,#f4f6fc)"></i>소로야<small>바닷가의 빛</small></button>
+  </div>
+  <p class="vnote" style="text-align:left;margin-top:10px">제공해 주신 모네와 소로야 그림에서 색을 따 새로 그렸어요. 그림을 그대로 쓰지는 않았고, 숫자와 문장은 어떤 화풍에서도 같습니다.</p>
 </div>
 
 <nav class="rail" id="rail" aria-label="장 이동">
@@ -413,8 +490,52 @@ function labelTexts(st){return st.counts.map(function(c,i){return c+'명 · '+pc
 function topName(key,st){var i=argmax(st.counts);return '‘'+Q[key].names[i]+'’ '+st.counts[i]+'명'}
 
 /* ---------- 꽃잎 도형 ---------- */
-var PETAL='M0 0C15 -20 19 -62 0 -100C-19 -62 -15 -20 0 0Z';
-var VEIN='M0 -6C2 -30 3 -62 0 -92';
+var PETAL='M0 0C15 -19 21 -60 2 -100C-18 -63 -16 -21 0 0Z';
+var PETAL_IN='M0 0C13 -17 19 -57 2 -95C-16 -60 -14 -20 0 0Z';
+var VEIN='M0 -3C2 -30 4 -62 2 -94';
+var VEINS_LONG='M0 -3C5 -28 10 -56 3 -90M0 -3C-5 -28 -8 -54 0 -88M0 -3C9 -24 15 -50 5 -80M0 -3C-9 -26 -12 -50 -3 -78';
+var SHEEN='M4 -94C15 -62 13 -26 3 -8';
+var FRECKLE='M2 -18C4 -26 6 -34 7 -42M-3 -22C-5 -30 -6 -38 -6 -46M8 -30C9 -38 10 -46 9 -54';
+var BRUSH1='M-3 -14C-2 -38 0 -60 3 -84', BRUSH2='M6 -24C8 -42 6 -58 2 -74';
+var VEINS_LAT=(function(){
+  var d='',i,y,x,hw,r;
+  for(i=0;i<7;i++){
+    y=-16-i*11; x=(-y)/94*2.2; hw=13*Math.sin(Math.PI*(-y)/100); r=Math.max(2.5,hw*.85);
+    d+='M'+x.toFixed(1)+' '+y+'Q'+(x+r*.5).toFixed(1)+' '+(y-3)+' '+(x+r).toFixed(1)+' '+(y-9)+'M'+x.toFixed(1)+' '+y+'Q'+(x-r*.5).toFixed(1)+' '+(y-3)+' '+(x-r).toFixed(1)+' '+(y-9);
+  }
+  return d;
+})();
+function stamenParts(L){
+  var st=L*0.11, out=[], k, a, r2, rad;
+  for(k=0;k<8;k++){
+    a=k*45+22+(k%2?7:-5); r2=st*(k%2?.82:1); rad=a*Math.PI/180;
+    out.push({x:Math.sin(rad)*r2,y:-Math.cos(rad)*r2,rot:a-90,rx:st*.15,ry:st*.075});
+  }
+  return {st:st,parts:out};
+}
+function buildPetal(pt){
+  s('path',{d:PETAL,'class':'petal'},pt);
+  var c=s('g',{'clip-path':'url(#petalClip)'},pt);
+  s('path',{d:PETAL,'class':'shade'},c);
+  s('path',{d:PETAL,'class':'glow'},c);
+  s('path',{d:PETAL,'class':'tipglow'},c);
+  s('path',{d:VEINS_LONG,'class':'vl'},c);
+  s('path',{d:VEINS_LAT,'class':'vlat'},c);
+  s('path',{d:VEIN,'class':'vein'},c);
+  s('path',{d:FRECKLE,'class':'frk'},c);
+  s('path',{d:SHEEN,'class':'sheen'},c);
+  s('path',{d:PETAL_IN,'class':'rim'},pt);
+  s('path',{d:BRUSH1,'class':'brush'},pt); s('path',{d:BRUSH2,'class':'brush'},pt);
+}
+function buildStamens(g,L){
+  var sp=stamenParts(L), gs=s('g',{'class':'stamens'},g);
+  s('circle',{r:sp.st*.6,'class':'coreglow'},gs);
+  sp.parts.forEach(function(q){
+    s('line',{x1:0,y1:0,x2:q.x,y2:q.y,'class':'fil'},gs);
+    s('ellipse',{cx:q.x,cy:q.y,rx:q.rx,ry:q.ry,transform:'rotate('+q.rot+' '+q.x+' '+q.y+')','class':'anther'},gs);
+  });
+}
+
 var WMUL=1.5;
 var GEO={
   full:{w:640,h:600,cx:320,cy:300,L:168,Rd:188,Rl:204,fs:22},
@@ -446,10 +567,11 @@ function Flower(host,key,o){
   });
   parts.forEach(function(p){
     p.pt=s('g',{'class':'pt'},g);
-    s('path',{d:PETAL,'class':'petal'},p.pt); s('path',{d:VEIN,'class':'vein'},p.pt);
+    buildPetal(p.pt);
     p.pt.style.transform='rotate('+p.a+'deg) scale(0,0)'; p.pt.style.opacity=0;
   });
-  s('circle',{r:kind==='full'?3.5:2.5,'class':'core'},g);
+  buildStamens(g,G.L);
+  s('circle',{r:kind==='full'?3:2,'class':'core'},g);
   if(G.Rd){
     parts.forEach(function(p,i){
       p.dot=s('circle',{cx:G.Rd*p.sx,cy:G.Rd*p.cy,r:4.5,'class':'dot'},g);
@@ -546,7 +668,7 @@ function renderVoices(id,rows,catFilter){
 }
 
 /* ---------- 상태 ---------- */
-var S={view:'story',q:'freq',seg:0,hover:-1,pin:-1,ch:0,off:{}};
+var S={view:'story',q:'freq',seg:0,hover:-1,pin:-1,ch:0,off:{},art:document.documentElement.getAttribute('data-art')||'basic'};
 KEYS.forEach(function(k){S.off[k]=new Set()});
 var FL={hero:null,story:{},mini:{},ex:{}}, SEQ=['hero','ch-freq','ch-purpose','ch-dep','ch-dir','ch-end'];
 var RN=['생각이 피는 모양'].concat(KEYS.map(function(k){return Q[k].short}),['읽는 법']);
@@ -558,7 +680,7 @@ function buildStory(){
   $('#hero-src').textContent='설문 「청소년 AI 사용 실태와 의존도」 · 응답 '+N+'건 · '+META.from.slice(0,16)+' ~ '+META.to.slice(0,16);
   KEYS.forEach(function(key,qi){
     var q=Q[key], nextId=SEQ[qi+2], segs=segsFor(key).slice(1);
-    var petal=s('svg',{viewBox:'0 0 60 20',width:60,height:20,'aria-hidden':'true'}); s('path',{d:'M2 10C16 1 44 2 58 10C44 18 16 19 2 10Z',fill:'url(#pgH)'},petal);
+    var petal=s('svg',{viewBox:'0 0 60 20',width:60,height:20,'aria-hidden':'true'}); s('path',{d:'M2 10C16 1 44 2 58 10C44 18 16 19 2 10Z',fill:'url(#pgH)'},petal); s('path',{d:'M7 10C22 8.6 42 8.6 54 10',fill:'none',stroke:'currentColor','stroke-opacity':.35,'stroke-width':.8,'stroke-linecap':'round'},petal);
     var cmp=h('div',{'class':'compare',style:'grid-template-columns:repeat('+segs.length+',1fr)'});
     segs.forEach(function(sg,i){
       var host=h('span',{'class':'mh',id:'mh-'+key+'-'+i}), cap=h('span',{'class':'cap',id:'cap-'+key+'-'+i});
@@ -644,7 +766,7 @@ function refreshActive(){
 function openExplore(key,segIdx){S.q=key;S.seg=segIdx||0;S.hover=-1;S.pin=-1;go('explore')}
 
 /* ---------- 인포그래픽 ---------- */
-var PC={ink:'#232459',ink2:'#4a4c80',ink3:'#6b6e9c',p0:'#4254c2'};
+var PC=null;
 var PF="'Cormorant Garamond','Noto Serif KR','Noto Serif CJK KR','AppleMyungjo','Batang',serif";
 var PS="'Noto Sans KR','Noto Sans CJK KR','Apple SD Gothic Neo','Malgun Gothic',sans-serif";
 function wrap(t,n){
@@ -662,19 +784,41 @@ function wrap(t,n){
 function pzText(x,y,lines,fs,fill,lh,anchor,fam){
   return lines.map(function(l,i){return '<text x="'+x+'" y="'+(y+i*lh)+'" font-family="'+(fam||PF)+'" font-size="'+fs+'" fill="'+fill+'"'+(anchor?' text-anchor="'+anchor+'"':'')+'>'+esc(l)+'</text>'}).join('');
 }
+function pzPetal(){
+  var P=PC, themed=S.art!=='basic', sw=' vector-effect="non-scaling-stroke"';
+  var o='<path d="'+PETAL+'" fill="url(#pzg)" fill-opacity=".9" stroke="'+P.pstroke+'" stroke-opacity="'+(themed?.5:.35)+'" stroke-width=".6"'+sw+(themed?' filter="url(#pzrough)"':'')+'/>';
+  o+='<g clip-path="url(#pzclip)"><path d="'+PETAL+'" fill="url(#pzsh)"/><path d="'+PETAL+'" fill="url(#pzbase)"/><path d="'+PETAL+'" fill="url(#pztip)"/>';
+  o+='<path d="'+VEINS_LONG+'" fill="none" stroke="'+P.vein+'" stroke-opacity=".6" stroke-width=".6" stroke-linecap="round"'+sw+'/>';
+  o+='<path d="'+VEINS_LAT+'" fill="none" stroke="'+P.vein+'" stroke-opacity=".42" stroke-width=".5" stroke-linecap="round"'+sw+'/>';
+  o+='<path d="'+VEIN+'" fill="none" stroke="'+P.vein+'" stroke-opacity=".7" stroke-width=".9" stroke-linecap="round"'+sw+'/>';
+  o+='<path d="'+FRECKLE+'" fill="none" stroke="'+P.freckle+'" stroke-opacity=".5" stroke-width="1.5" stroke-dasharray="0 3.6" stroke-linecap="round"'+sw+'/>';
+  o+='<path d="'+SHEEN+'" fill="none" stroke="'+P.hi+'" stroke-opacity=".6" stroke-width="1.4" stroke-linecap="round"'+sw+'/></g>';
+  o+='<path d="'+PETAL_IN+'" fill="none" stroke="'+P.stops[2]+'" stroke-opacity=".5" stroke-width=".8"'+sw+'/>';
+  if(themed) o+='<path d="'+BRUSH1+'" fill="none" stroke="'+P.stops[2]+'" stroke-opacity=".55" stroke-width="2.2" stroke-linecap="round"'+sw+'/><path d="'+BRUSH2+'" fill="none" stroke="'+P.stops[2]+'" stroke-opacity=".55" stroke-width="2.2" stroke-linecap="round"'+sw+'/>';
+  return o;
+}
+function pzStamens(cx,cy,L){
+  var P=PC, sp=stamenParts(L), o='<circle cx="'+cx+'" cy="'+cy+'" r="'+(sp.st*.6).toFixed(1)+'" fill="url(#pzcore)"/>';
+  sp.parts.forEach(function(q){
+    var x=(cx+q.x).toFixed(1), y=(cy+q.y).toFixed(1);
+    o+='<line x1="'+cx+'" y1="'+cy+'" x2="'+x+'" y2="'+y+'" stroke="'+P.filament+'" stroke-width="'+(L>150?1.6:1.1)+'" stroke-linecap="round"/>';
+    o+='<ellipse cx="'+x+'" cy="'+y+'" rx="'+q.rx.toFixed(1)+'" ry="'+q.ry.toFixed(1)+'" transform="rotate('+q.rot.toFixed(0)+' '+x+' '+y+')" fill="'+P.anther+'"/>';
+  });
+  return o+'<circle cx="'+cx+'" cy="'+cy+'" r="2.6" fill="'+P.anther+'"/>';
+}
 function pzFlower(key,st,cx,cy,L,fs,labels,deco){
   var cats=Q[key].cats,n=cats.length,Rd=L*1.12,Rl=L*1.24,o='';
   cats.forEach(function(c,i){if(deco)return;var r=360*i/n*Math.PI/180;o+='<line x1="'+cx+'" y1="'+cy+'" x2="'+(cx+Rd*Math.sin(r)).toFixed(1)+'" y2="'+(cy-Rd*Math.cos(r)).toFixed(1)+'" stroke="'+PC.ink3+'" stroke-opacity=".5" stroke-dasharray="1 5" stroke-linecap="round" stroke-width="1.4"/>'});
   cats.forEach(function(c,i){
     var v=st.shares[i]||0; if(v<=0) return;
     var k=Math.sqrt(Math.min(1,v)),sy=(L/100)*k,sx=(L/100)*WMUL*k;
-    o+='<g transform="translate('+cx+' '+cy+') rotate('+(360*i/n)+') scale('+sx.toFixed(3)+' '+sy.toFixed(3)+')"><path d="'+PETAL+'" fill="url(#pzg)" fill-opacity=".82" stroke="'+PC.p0+'" stroke-opacity=".35" stroke-width=".6" vector-effect="non-scaling-stroke"/><path d="'+VEIN+'" fill="none" stroke="'+PC.ink+'" stroke-opacity=".28" stroke-width=".8" vector-effect="non-scaling-stroke"/></g>';
+    o+='<g transform="translate('+cx+' '+cy+') rotate('+(360*i/n)+') scale('+sx.toFixed(3)+' '+sy.toFixed(3)+')">'+pzPetal()+'</g>';
   });
-  o+='<circle cx="'+cx+'" cy="'+cy+'" r="3.5" fill="'+PC.p0+'"/>';
+  o+=pzStamens(cx,cy,L);
   cats.forEach(function(c,i){
     if(deco) return;
     var a=360*i/n,r=a*Math.PI/180,v=st.shares[i]||0;
-    o+='<circle cx="'+(cx+Rd*Math.sin(r)).toFixed(1)+'" cy="'+(cy-Rd*Math.cos(r)).toFixed(1)+'" r="4" fill="'+PC.p0+'" opacity=".85"/>';
+    o+='<circle cx="'+(cx+Rd*Math.sin(r)).toFixed(1)+'" cy="'+(cy-Rd*Math.cos(r)).toFixed(1)+'" r="4" fill="'+PC.dot+'" opacity=".85"/>';
     if(!labels) return;
     var lines=c.concat([st.counts[i]+'명 · '+pct(v)]),pos=lblPos(a,Rl,fs,lines.length),X=(cx+pos.x).toFixed(1),Y=(cy+pos.y).toFixed(1);
     o+='<text x="'+X+'" y="'+Y+'" text-anchor="'+pos.anchor+'" font-family="'+PF+'" font-size="'+fs+'" fill="'+PC.ink+'" opacity="'+(v>0?1:.4)+'">';
@@ -687,13 +831,13 @@ function leaf(x,y,w,hh){
   return 'M'+(x+4)+' '+y+'H'+(x+w-26)+'Q'+(x+w)+' '+y+' '+(x+w)+' '+(y+26)+'V'+(y+hh-4)+'Q'+(x+w)+' '+(y+hh)+' '+(x+w-4)+' '+(y+hh)+'H'+(x+26)+'Q'+x+' '+(y+hh)+' '+x+' '+(y+hh-26)+'V'+(y+4)+'Q'+x+' '+y+' '+(x+4)+' '+y+'Z';
 }
 function renderPoster(){
-  var W=900,BH=580,T0=320,P=PC;
+  var W=900,BH=580,T0=320,P=POSTER[S.art]||POSTER.basic; PC=P;
   var ST={};KEYS.forEach(function(k){ST[k]=tally(ROWS,k)});
   var H=T0+BH*4+500;
   var o='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 '+W+' '+H+'" width="'+W+'" height="'+H+'" role="img" aria-label="청소년 AI 사용 실태와 의존도 설문 인포그래픽">';
-  var stops='<stop offset="0" stop-color="#4254c2"/><stop offset=".55" stop-color="#62a9d0"/><stop offset="1" stop-color="#d2ebe0"/>';
-  o+='<defs><linearGradient id="pzbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e2f0ec"/><stop offset="1" stop-color="#d5daf0"/></linearGradient><linearGradient id="pzg" x1="0" y1="1" x2="0" y2="0">'+stops+'</linearGradient></defs>';
-  o+='<rect width="'+W+'" height="'+H+'" fill="url(#pzbg)"/>';
+  var stops='<stop offset="0" stop-color="'+P.stops[0]+'"/><stop offset=".55" stop-color="'+P.stops[1]+'"/><stop offset="1" stop-color="'+P.stops[2]+'"/>';
+  o+='<defs><linearGradient id="pzbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="'+P.bg[0]+'"/><stop offset="1" stop-color="'+P.bg[1]+'"/></linearGradient><linearGradient id="pzg" x1="0" y1="1" x2="0" y2="0">'+stops+'</linearGradient><linearGradient id="pzsh" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="'+P.shade+'" stop-opacity=".34"/><stop offset=".4" stop-color="'+P.shade+'" stop-opacity="0"/><stop offset=".7" stop-color="'+P.hi+'" stop-opacity="0"/><stop offset="1" stop-color="'+P.hi+'" stop-opacity=".45"/></linearGradient><radialGradient id="pzbase" gradientUnits="userSpaceOnUse" cx="0" cy="-2" r="38"><stop offset="0" stop-color="'+P.core+'" stop-opacity=".85"/><stop offset="1" stop-color="'+P.core+'" stop-opacity="0"/></radialGradient><radialGradient id="pztip" gradientUnits="userSpaceOnUse" cx="1" cy="-97" r="28"><stop offset="0" stop-color="'+P.hi+'" stop-opacity=".55"/><stop offset="1" stop-color="'+P.hi+'" stop-opacity="0"/></radialGradient><radialGradient id="pzcore"><stop offset="0" stop-color="'+P.anther+'" stop-opacity=".95"/><stop offset="1" stop-color="'+P.anther+'" stop-opacity="0"/></radialGradient><clipPath id="pzclip"><path d="'+PETAL_IN+'"/></clipPath><filter id="pzrough" x="-10%" y="-10%" width="120%" height="120%"><feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="7" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="7" xChannelSelector="R" yChannelSelector="G"/></filter></defs>';
+  o+='<rect width="'+W+'" height="'+H+'" fill="url(#pzbg)"/>'+strokesSVG(S.art,W,H);
   o+=pzFlower('purpose',ST.purpose,770,160,112,0,false,true);
   o+='<text x="70" y="160" font-family="'+PF+'" font-size="80" font-weight="300" fill="'+P.ink+'">생각이 피는 모양</text>';
   o+='<text x="72" y="218" font-family="'+PF+'" font-size="30" fill="'+P.ink2+'">청소년 AI 사용 실태와 의존도 설문</text>';
@@ -704,7 +848,7 @@ function renderPoster(){
     o+='<circle cx="92" cy="'+(y0+56)+'" r="22" fill="none" stroke="'+P.ink+'" stroke-opacity=".55" stroke-width="1.5"/><text x="92" y="'+(y0+65)+'" text-anchor="middle" font-family="'+PF+'" font-size="26" fill="'+P.ink+'">'+(i+1)+'</text>';
     o+=pzText(134,y0+56,qs,34,P.ink,44);
     o+=pzFlower(key,st,245,y0+350,100,26,true,false);
-    var nm=Q[key].names, big=function(t){return '<text x="'+X+'" y="'+(y0+300)+'" font-family="'+PF+'" font-size="112" font-weight="300" fill="'+P.p0+'">'+esc(t)+'</text>'};
+    var nm=Q[key].names, big=function(t){return '<text x="'+X+'" y="'+(y0+300)+'" font-family="'+PF+'" font-size="112" font-weight="300" fill="'+P.num+'">'+esc(t)+'</text>'};
     if(key==='freq'){
       var t=argmax(st.counts);
       o+=big(st.counts[t]+'명')+pzText(X,y0+350,['가장 많이 고른 답','‘'+nm[t]+'’'],28,P.ink,38);
@@ -727,7 +871,7 @@ function renderPoster(){
   [[quotes[0],70],[quotes[1],470]].forEach(function(a){
     var r=a[0]; if(!r) return;
     var lines=wrap('“'+r.x+'”',14).slice(0,6);
-    o+='<path d="'+leaf(a[1],qy,360,290)+'" fill="#ffffff" fill-opacity=".55" stroke="'+P.ink+'" stroke-opacity=".12"/>';
+    o+='<path d="'+leaf(a[1],qy,360,290)+'" fill="'+P.card+'" fill-opacity="'+P.cardA+'" stroke="'+P.ink+'" stroke-opacity=".14"/>';
     o+=pzText(a[1]+26,qy+52,lines,22,P.ink,32);
     o+=pzText(a[1]+26,qy+262,['참여자 '+r.n+' · 분류: '+DIR_SHORT[r.c]],17,P.ink3,24,null,PS);
   });
@@ -794,23 +938,121 @@ function buildData(){
   );
 }
 
+/* ---------- 화풍 (모네 · 소로야) ---------- */
+function mulberry(a){return function(){a|=0;a=a+0x6D2B79F5|0;var t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+var ART={
+  monet:{base:['#1c352f','#28483f'],scrim:'8,22,20',scrimA:[.34,.16],seed:11,
+    dark:['#2c3b2f','#374938','#43482f','#323a2f','#3f4731','#2f4a3d'],teal:['#306161','#308186','#397980','#3e627a','#328a88'],sage:['#4d5b46','#7fa38d'],violet:['#4a4470','#5b4f86']},
+  sorolla:{base:['#eef2fb','#d6dff3'],scrim:'255,255,255',scrimA:[.22,.08],seed:23,
+    white:['#ffffff','#f1f3f9','#e4e6ef','#d9dcec'],blue:['#b6c6ea','#a3b6e4','#c5d0ee','#9db2e0'],mid:['#7f98d2','#6a83c0'],sage:['#c4d8c8','#b2c7b6'],sand:['#f0dfc8','#e8d2b4'],rose:['#e9c3c8']}
+};
+function makeStrokes(art,W,H,density,cap,plain){
+  var A=ART[art], R=mulberry(A.seed), out=[], area=W*H, i, k, n;
+  function pk(a){return a[Math.floor(R()*a.length)]}
+  function add(x,y,len,ang,w,col,a,bend){
+    var dx=Math.cos(ang)*len/2, dy=Math.sin(ang)*len/2, bx=(R()-.5)*bend, by=(R()-.5)*bend;
+    out.push({x:x-dx,y:y-dy,cx:x+bx,cy:y+by,x2:x+dx,y2:y+dy,w:w,col:col,a:a});
+  }
+  if(art==='monet'){
+    n=Math.min(cap,Math.round(area/430*density));
+    for(i=0;i<n;i++){
+      var r=R(), col=r<.55?pk(A.dark):r<.85?pk(A.teal):r<.95?pk(A.sage):pk(A.violet), lg=R()<.12;
+      add(R()*W,R()*H,lg?120+R()*110:28+R()*70,(R()-.5)*(lg?.12:.5),lg?4+R()*5:8+R()*13,col,lg?.2+R()*.15:.14+R()*.26,12);
+    }
+    if(!plain){
+      var pads=Math.max(4,Math.round(area/60000*density));
+      for(i=0;i<pads;i++){
+        var cx=R()*W, cy=R()*H, rx=36+R()*70, ry=rx*(.3+R()*.12);
+        for(k=0;k<14;k++){var t=k/14*Math.PI*2;add(cx+rx*Math.cos(t),cy+ry*Math.sin(t),rx*.5,t+Math.PI/2,4+R()*5,pk(A.teal),.4+R()*.25,5)}
+        for(k=0;k<6;k++) add(cx+(R()-.5)*rx,cy+(R()-.5)*ry,rx*.9,(R()-.5)*.15,4+R()*5,pk(A.teal),.3+R()*.2,4);
+      }
+      var lil=W>=900?Math.max(3,Math.round(W/300*density)):0;
+      for(i=0;i<lil;i++){
+        var lx=R()<.5?R()*W*.08:W*(.92+R()*.08), ly=R()*H, rr=18+R()*16;
+        add(lx+3,ly+rr*.6,rr*2.6,0,rr*.55,pk(A.violet),.5,4);
+        for(k=0;k<8;k++){var ta=k/8*Math.PI*2;add(lx+Math.cos(ta)*rr*.5,ly+Math.sin(ta)*rr*.28,rr*.8,ta,rr*.62,k%2?'#f7ecc0':'#efa08a',.82,2)}
+        add(lx,ly-1,rr*.5,0,rr*.55,'#f3c845',.92,2);
+      }
+    }
+  }else{
+    n=Math.min(cap,Math.round(area/560*density));
+    for(i=0;i<n;i++){
+      var q=R(), c2=q<.30?pk(A.white):q<.76?pk(A.blue):q<.86?pk(A.mid):q<.93?pk(A.sage):q<.97?pk(A.sand):pk(A.rose);
+      var isMid=A.mid.indexOf(c2)>=0;
+      add(R()*W,R()*H,60+R()*190,-.22+(R()-.5)*.55,8+R()*22,c2,isMid?.1+R()*.1:(c2===A.sage[0]||c2===A.sage[1]||c2===A.sand[0]||c2===A.sand[1]||c2===A.rose[0])?.12+R()*.1:.16+R()*.3,22);
+    }
+    var foam=Math.max(6,Math.round(W/70*density));
+    for(i=0;i<foam;i++) add(R()*W,H*(.06+R()*.4),160+R()*260,(R()-.5)*.06,3+R()*4,'#ffffff',.55+R()*.3,6);
+  }
+  return out;
+}
+function paintBg(){
+  var art=S.art; if(art==='basic') return;
+  var cv=$('#paint'), W=window.innerWidth, H=window.innerHeight; if(!cv||!cv.getContext) return;
+  cv.width=W; cv.height=H;
+  var ctx=cv.getContext('2d'), A=ART[art], g=ctx.createLinearGradient(0,0,0,H);
+  g.addColorStop(0,A.base[0]); g.addColorStop(1,A.base[1]); ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
+  var WR=mulberry(A.seed+7), wc=art==='monet'?['48,129,134','62,98,122','91,79,134','67,72,47']:['91,122,171','154,175,225','255,255,255','200,196,230'], wa=art==='monet'?.17:.24;
+  for(var wi=0,wn=Math.round(W*H/38000);wi<wn;wi++){
+    var wx=WR()*W, wy=WR()*H, wr=80+WR()*200, wg=ctx.createRadialGradient(wx,wy,0,wx,wy,wr), wk=wc[Math.floor(WR()*wc.length)];
+    wg.addColorStop(0,'rgba('+wk+','+wa+')'); wg.addColorStop(1,'rgba('+wk+',0)'); ctx.fillStyle=wg; ctx.fillRect(wx-wr,wy-wr,wr*2,wr*2);
+  }
+  ctx.lineCap='round';
+  makeStrokes(art,W,H,1,2600,false).forEach(function(st){
+    var dx=st.x2-st.x, dy=st.y2-st.y, L=Math.sqrt(dx*dx+dy*dy)||1, px=-dy/L, py=dx/L;
+    for(var b=-1;b<=1;b++){
+      var o=b*st.w*.28;
+      ctx.globalAlpha=st.a*(b===0?1:.7); ctx.strokeStyle=st.col; ctx.lineWidth=Math.max(1,st.w*.4);
+      ctx.beginPath(); ctx.moveTo(st.x+px*o,st.y+py*o); ctx.quadraticCurveTo(st.cx+px*o,st.cy+py*o,st.x2+px*o,st.y2+py*o); ctx.stroke();
+    }
+  });
+  ctx.globalAlpha=1;
+  var sg=ctx.createLinearGradient(0,0,0,H);
+  sg.addColorStop(0,'rgba('+A.scrim+','+A.scrimA[0]+')'); sg.addColorStop(1,'rgba('+A.scrim+','+A.scrimA[1]+')');
+  ctx.fillStyle=sg; ctx.fillRect(0,0,W,H);
+}
+function strokesSVG(art,W,H){
+  if(art==='basic') return '';
+  var o='<g fill="none" stroke-linecap="round">';
+  makeStrokes(art,W,H,.5,1300,true).forEach(function(st){o+='<path d="M'+st.x.toFixed(1)+' '+st.y.toFixed(1)+'Q'+st.cx.toFixed(1)+' '+st.cy.toFixed(1)+' '+st.x2.toFixed(1)+' '+st.y2.toFixed(1)+'" stroke="'+st.col+'" stroke-opacity="'+st.a.toFixed(2)+'" stroke-width="'+st.w.toFixed(1)+'"/>'});
+  return o+'</g>';
+}
+var POSTER={
+  basic:{bg:['#e2f0ec','#d5daf0'],ink:'#232459',ink2:'#4a4c80',ink3:'#6b6e9c',num:'#4254c2',dot:'#4254c2',stops:['#4254c2','#62a9d0','#d2ebe0'],pstroke:'#4254c2',vein:'#232459',card:'#ffffff',cardA:.55,shade:'#232459',hi:'#ffffff',core:'#2f3fae',anther:'#f2c14e',filament:'#e8dfae',freckle:'#232459'},
+  monet:{bg:['#1c352f','#28483f'],ink:'#f5edd6',ink2:'#d5d3b6',ink3:'#a9baa4',num:'#f3d58a',dot:'#cfe3d3',stops:['#f0b84a','#f7e3a1','#ee9c88'],pstroke:'#7a63a6',vein:'#6e5078',card:'#0e201d',cardA:.62,shade:'#5a3a70',hi:'#fff6d8',core:'#e8892d',anther:'#d9682f',filament:'#f7e3a1',freckle:'#b5523f'},
+  sorolla:{bg:['#eef2fb','#d6dff3'],ink:'#1d2a5b',ink2:'#3c4f86',ink3:'#4f5d8f',num:'#3f62b0',dot:'#3f62b0',stops:['#3f62b0','#8fa7dc','#f4f6fc'],pstroke:'#3f62b0',vein:'#1d2a5b',card:'#ffffff',cardA:.66,shade:'#1d2a5b',hi:'#ffffff',core:'#2f4fa8',anther:'#e6b94f',filament:'#f4ecd0',freckle:'#3f62b0'}
+};
+var ART_NAMES={basic:'기본',monet:'모네',sorolla:'소로야'};
+function setArt(name,noSave){
+  if(!ART_NAMES[name]) name='basic';
+  S.art=name;
+  if(name==='basic') document.documentElement.removeAttribute('data-art'); else document.documentElement.setAttribute('data-art',name);
+  $$('#art-pop [data-art]').forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.art===name))});
+  if(!noSave){
+    try{localStorage.setItem('shape.art',name)}catch(e){}
+    try{var u=new URL(location.href); if(name==='basic')u.searchParams.delete('art'); else u.searchParams.set('art',name); history.replaceState(null,'',u.pathname+u.search+u.hash)}catch(e){}
+  }
+  paintBg(); renderPoster();
+}
+
 /* ---------- 껍데기 ---------- */
-var LIVE=/^https?:$/.test(location.protocol), SHARE_URL=LIVE?location.href.split('#')[0]:'';
-var POPS={help:['#help','#help-btn'],share:['#share-pop','#share-btn']};
+var LIVE=/^https?:$/.test(location.protocol);
+function shareUrl(){return LIVE?location.href.split('#')[0]:''}
+var POPS={help:['#help','#help-btn'],share:['#share-pop','#share-btn'],art:['#art-pop','#art-btn']};
 function closePops(){Object.keys(POPS).forEach(function(k){$(POPS[k][0]).hidden=true;$(POPS[k][1]).setAttribute('aria-expanded','false')})}
 function togglePop(name,forceOpen){
   var pop=$(POPS[name][0]), btn=$(POPS[name][1]), open=forceOpen?true:pop.hidden;
   closePops();
-  if(open){pop.hidden=false;btn.setAttribute('aria-expanded','true');if(name==='share')$('#share-url').value=SHARE_URL}
+  if(open){pop.hidden=false;btn.setAttribute('aria-expanded','true');if(name==='share')$('#share-url').value=shareUrl()}
 }
 function copyLink(){
-  var u=$('#share-url'); u.value=SHARE_URL;
-  function fb(){u.focus();u.select();try{u.setSelectionRange(0,SHARE_URL.length)}catch(e){}var ok=false;try{ok=document.execCommand('copy')}catch(e){}toast(ok?'링크를 복사했어요':'링크를 길게 눌러 복사해 주세요')}
-  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(SHARE_URL).then(function(){toast('링크를 복사했어요')},fb)}else fb();
+  var u=$('#share-url'); u.value=shareUrl();
+  function fb(){u.focus();u.select();try{u.setSelectionRange(0,shareUrl().length)}catch(e){}var ok=false;try{ok=document.execCommand('copy')}catch(e){}toast(ok?'링크를 복사했어요':'링크를 길게 눌러 복사해 주세요')}
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(shareUrl()).then(function(){toast('링크를 복사했어요')},fb)}else fb();
 }
 function nativeShare(){
   if(!navigator.share){copyLink();return}
-  navigator.share({title:document.title,text:'생각이 피는 모양 — 청소년 AI 사용 실태와 의존도',url:SHARE_URL}).catch(function(e){if(!e||e.name!=='AbortError')copyLink()});
+  navigator.share({title:document.title,text:'생각이 피는 모양 — 청소년 AI 사용 실태와 의존도',url:shareUrl()}).catch(function(e){if(!e||e.name!=='AbortError')copyLink()});
 }
 var toastT;
 function toast(t){var e=$('#toast');e.textContent=t;e.hidden=false;clearTimeout(toastT);toastT=setTimeout(function(){e.hidden=true},2600)}
@@ -848,14 +1090,18 @@ function wire(){
     var g=e.target.closest('[data-go]'); if(g){go(g.dataset.go);return}
     var sc=e.target.closest('[data-scroll]'); if(sc){scrollToId(sc.dataset.scroll);return}
     if(e.target.closest('[data-action=share]')){togglePop('share',true);return}
-    if(!e.target.closest('#help,#help-btn,#share-pop,#share-btn')) closePops();
+    if(!e.target.closest('#help,#help-btn,#share-pop,#share-btn,#art-pop,#art-btn')) closePops();
   });
   $('#help-btn').addEventListener('click',function(){togglePop('help')});
+  $('#art-btn').addEventListener('click',function(){togglePop('art')});
+  $$('#art-pop [data-art]').forEach(function(b){b.addEventListener('click',function(){setArt(b.dataset.art);closePops()})});
+  var rsT,lastW=window.innerWidth,lastH=window.innerHeight;
+  window.addEventListener('resize',function(){clearTimeout(rsT);rsT=setTimeout(function(){var w=window.innerWidth,h2=window.innerHeight;if(w!==lastW||Math.abs(h2-lastH)>140){lastW=w;lastH=h2;paintBg()}},200)});
   $('#share-btn').addEventListener('click',function(){togglePop('share')});
   $('#share-copy').addEventListener('click',copyLink);
   $('#share-native').addEventListener('click',nativeShare);
   $('#share-native').hidden=!navigator.share;
-  $('#share-url').value=SHARE_URL;
+  $('#share-url').value=shareUrl();
   $('#share-url').addEventListener('focus',function(){this.select()});
   $('#png-btn').addEventListener('click',exportPng);
   $('#rail-prev').addEventListener('click',function(){
@@ -887,7 +1133,7 @@ function applyConfig(){
 /* ---------- 시작 ---------- */
 function safe(name,fn){try{fn()}catch(e){if(window.__report)window.__report(name+' — '+((e&&e.message)||e));if(window.console)console.error(e)}}
 safe('story',buildStory); safe('explore',buildExplore); safe('data',buildData);
-safe('wire',wire); safe('config',applyConfig); safe('fill',fillStory); safe('poster',renderPoster);
+safe('wire',wire); safe('config',applyConfig); safe('fill',fillStory); safe('poster',renderPoster); safe('art',function(){setArt(S.art,true)});
 safe('view',function(){var m=/^#\/(story|explore|poster|data)$/.exec(location.hash||'');go(m?m[1]:'story')});
 })();
 </script>
