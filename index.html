@@ -29,6 +29,7 @@
   --accent:#c0505c;
   --p0:#4254c2; --p1:#62a9d0; --p2:#d2ebe0; --vein:rgba(35,36,89,.30); --dot:#4254c2;
   --shade:#232459; --hi:#ffffff; --core:#2f3fae; --anther:#f2c14e; --filament:#e8dfae; --freckle:#232459;
+  --leaf0:#4f9d72; --leaf1:#7cc499; --leaf2:#bfe6c9; --leafvein:#2f6b48; --trunk:#8a6b4a; --trunk2:#6b4f34; --deadleaf:#b9ac8e; --bark:#2a2220;
   --serif:"Cormorant Garamond","Noto Serif KR","Noto Serif CJK KR","AppleMyungjo","Batang",serif;
   --sans:"Noto Sans KR","Noto Sans CJK KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
   color-scheme:light;
@@ -42,6 +43,7 @@
     --accent:#f0a0a8;
     --p0:#8fa4ff; --p1:#63c8d6; --p2:#c3f0da; --vein:rgba(255,255,255,.38); --dot:#a5b4ff;
     --shade:#0b0f2e; --hi:#f2f6ff; --core:#6d82ff; --anther:#f7d36a; --filament:#f2eac0; --freckle:#0b0f2e;
+    --leaf0:#3f9468; --leaf1:#6cc696; --leaf2:#b4e8c8; --leafvein:#1f5c3c; --trunk:#8a6b4a; --trunk2:#6b4f34; --deadleaf:#9c8f72; --bark:#cbbcb4;
     color-scheme:dark;
   }
 }
@@ -52,6 +54,7 @@
   --accent:#f0a0a8;
   --p0:#8fa4ff; --p1:#63c8d6; --p2:#c3f0da; --vein:rgba(255,255,255,.38); --dot:#a5b4ff;
   --shade:#0b0f2e; --hi:#f2f6ff; --core:#6d82ff; --anther:#f7d36a; --filament:#f2eac0; --freckle:#0b0f2e;
+  --leaf0:#3f9468; --leaf1:#6cc696; --leaf2:#b4e8c8; --leafvein:#1f5c3c; --trunk:#8a6b4a; --trunk2:#6b4f34; --deadleaf:#9c8f72; --bark:#cbbcb4;
   color-scheme:dark;
 }
 /* 화풍: 제공된 모네·소로야 그림에서 뽑은 색 */
@@ -62,6 +65,7 @@
   --accent:#ee9c84;
   --p0:#f0b84a; --p1:#f7e3a1; --p2:#ee9c88; --pstroke:#7a63a6; --vein:rgba(110,80,120,.5); --dot:#cfe3d3;
   --shade:#5a3a70; --hi:#fff6d8; --core:#e8892d; --anther:#d9682f; --filament:#f7e3a1; --freckle:#b5523f;
+  --leaf0:#7c9a52; --leaf1:#a8c46c; --leaf2:#e0e3a0; --leafvein:#4d6a34; --trunk:#5b4632; --trunk2:#3f3323; --deadleaf:#8a7a52; --bark:#d6c7ad;
   color-scheme:dark;
 }
 :root[data-art="sorolla"]{
@@ -71,6 +75,7 @@
   --accent:#b8505f;
   --p0:#3f62b0; --p1:#8fa7dc; --p2:#f4f6fc; --pstroke:#3f62b0; --vein:rgba(29,42,91,.35); --dot:#3f62b0;
   --shade:#1d2a5b; --hi:#ffffff; --core:#2f4fa8; --anther:#e6b94f; --filament:#f4ecd0; --freckle:#3f62b0;
+  --leaf0:#6f9a7c; --leaf1:#a9c9ae; --leaf2:#e7f0e2; --leafvein:#3f6b4d; --trunk:#8a7256; --trunk2:#6b5a42; --deadleaf:#c9bfa0; --bark:#2a2440;
   color-scheme:light;
 }
 #paint{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;display:none;filter:blur(.7px);transform:scale(1.02)}
@@ -135,15 +140,17 @@ button{font-family:inherit;color:inherit}
 .flower-wrap{max-width:720px;margin:20px auto 0}
 svg.flower{display:block;width:100%;height:auto;overflow:visible}
 .petal-key{display:flex;align-items:center;justify-content:center;gap:10px;margin:4px 0 0;font:400 13.5px var(--sans);color:var(--ink-3);text-align:center}
-.compare-title{font:500 14px var(--sans);color:var(--ink-3);text-align:center;margin:56px 0 0}
-.compare{display:grid;gap:clamp(6px,2vw,20px);margin:12px auto 0;max-width:900px}
-@media(max-width:640px){.compare{grid-template-columns:repeat(2,1fr)!important}}
-.mini-fig{display:block;background:none;border:0;padding:6px;cursor:pointer;text-align:center;border-radius:12px}
-.mini-fig:hover{background:var(--card)}
-.mini-fig .mh{display:block;width:100%;max-width:200px;margin:0 auto}
-.mini-fig .cap{display:block;font:400 12.5px/1.55 var(--sans);color:var(--ink-2);margin-top:2px}
-.mini-fig .cap strong{display:block;color:var(--ink);font-weight:700;font-size:13px}
-.insight{text-align:center;max-width:38em;margin:14px auto 0;color:var(--ink-2);font-size:15.5px}
+.compare-title{font:400 clamp(22px,3.4vw,30px)/1.4 var(--serif);color:var(--ink);text-align:center;margin:72px 0 0;display:flex;align-items:center;gap:16px}
+.compare-title::before,.compare-title::after{content:'';flex:1;height:1px;background:var(--line)}
+.compare{display:grid;gap:clamp(8px,2vw,22px);margin:18px auto 0;max-width:1040px;background:var(--card);border:1px solid var(--card-b);border-radius:8px 40px 8px 40px;padding:clamp(14px,3vw,30px) clamp(10px,2.4vw,26px)}
+@media(max-width:640px){.compare{grid-template-columns:1fr!important}}
+.mini-fig{display:block;background:none;border:0;padding:8px;cursor:pointer;text-align:center;border-radius:16px;transition:background .2s}
+.mini-fig:hover{background:var(--field)}
+.mini-fig .mh{display:block;width:100%;max-width:440px;margin:0 auto}
+.flower.mini .lbl{font-size:22px}
+.mini-fig .cap{display:block;font:400 14px/1.6 var(--sans);color:var(--ink-2);margin-top:6px}
+.mini-fig .cap strong{display:block;color:var(--ink);font-weight:700;font-size:16.5px;margin-bottom:2px}
+.insight{text-align:center;max-width:36em;margin:20px auto 0;color:var(--ink);font:400 18px/1.8 var(--serif)}
 .next-ch{display:block;margin:48px auto 0;background:none;border:0;font:500 13px var(--sans);color:var(--ink-3);cursor:pointer;padding:8px 14px}
 .next-ch::after{content:'';display:block;width:9px;height:9px;margin:8px auto 0;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg)}
 .end p{max-width:36em;color:var(--ink-2)}
@@ -220,6 +227,26 @@ svg.flower{display:block;width:100%;height:auto;overflow:visible}
 .voice footer{font:500 12px var(--sans);color:var(--ink-3)}
 .more{display:block;margin:6px auto 0}
 .voices-block{margin-top:64px}
+.tree-wrap{max-width:760px;margin:18px auto 0}
+.tree-wrap svg{display:block;width:100%;height:auto;overflow:hidden}
+.tree .bark{fill:var(--bark)}
+.tree .catgroup,.tree .fallen>g{transition:opacity .35s}
+.tree .catgroup.dim,.tree .fallen .dim{opacity:.22}
+.tree .cap{font:600 13px var(--sans);fill:var(--ink-2);paint-order:stroke;stroke:var(--bg-a);stroke-width:4px;stroke-linejoin:round}
+@media(max-width:560px){.tree .cap{font-size:21px;stroke-width:6px}}
+.tree .pet{stroke-width:.7}
+.tree .t0{fill:#fbd3dc;stroke:#f3a9bb}.tree .t1{fill:#f8c2cf;stroke:#ee98ad}.tree .t2{fill:#f5b3c3;stroke:#e6879f}
+.tree .eye{fill:#e27a96}.tree .stm{fill:#b8456a}
+.tree .gleaf{fill:#9db27a}.tree .gvein{stroke:#7a9160;stroke-width:.6;fill:none}.tree .bud{fill:#f19bb0}
+.tree .fallenpet{fill:#f6c6d1;stroke:#eaa2b4;stroke-width:.6;opacity:.9}
+.tree .bloom{cursor:pointer;transition:opacity .2s}
+.tree .bloom .hit{fill:transparent}
+.tree .bloom:hover .pet,.tree .bloom:focus-visible .pet{stroke:#c0506f;stroke-width:1.2}
+.tree .bloom.sel .pet{stroke:var(--accent);stroke-width:1.8}
+.quote-panel{max-width:36em;margin:16px auto 0;text-align:center;background:var(--card);border:1px solid var(--card-b);border-radius:6px 26px 6px 26px;padding:16px 22px;font:400 15.5px/1.8 var(--serif);color:var(--ink)}
+.quote-panel p{margin:0 0 8px;white-space:pre-wrap}
+.quote-panel footer{font:500 12.5px var(--sans);color:var(--ink-3)}
+.quote-panel.empty{color:var(--ink-3);font:400 13.5px var(--sans);background:none;border-style:dashed}
 
 /* poster */
 .poster{max-width:900px;margin:0 auto;padding:22px 20px 72px}
@@ -371,10 +398,10 @@ body[data-view=poster] .rail,body[data-view=data] .rail{display:none!important}
       <p class="readout" id="readout" aria-live="polite"></p>
       <p class="hint">질문 이름을 누르거나 방향키(← → 질문, ↑ ↓ 그룹)로 움직여 보세요. 꽃 가장자리의 원을 누르면 그 답을 켜고 끌 수 있고, 꽃잎이나 이름을 누르면 하나만 강조돼요. 꽃잎의 넓이는 그 답을 고른 사람의 비율에 비례합니다.</p>
       <div class="ex-voices" id="ex-voices" hidden>
-        <h3>직접 쓴 답변 (원문 그대로)</h3>
-        <p class="vnote" id="ex-note"></p>
-        <div class="voices" id="wall-ex"></div>
-        <button class="btn ghost more" id="more-ex">답변 더 보기</button>
+        <h3>직접 쓴 답변, 벚꽃 가지로</h3>
+        <p class="vnote">벚꽃 한 송이가 답변 하나예요. 꽃이 많고 클수록 그 갈래를 고른 사람이 많다는 뜻이고(정확한 비율은 아니에요), 답을 비워 둔 사람은 가지 아래 떨어진 꽃잎으로 나타냈어요. 초록 잎과 꽃봉오리는 장식이에요. 꽃을 눌러 읽어보세요.</p>
+        <div class="tree-wrap" id="tree-ex"></div>
+        <p class="quote-panel empty" id="quote-ex">꽃을 눌러 답변을 읽어보세요.</p>
       </div>
     </div>
   </div>
@@ -539,7 +566,7 @@ function buildStamens(g,L){
 var WMUL=1.5;
 var GEO={
   full:{w:640,h:600,cx:320,cy:300,L:168,Rd:188,Rl:204,fs:22},
-  mini:{w:220,h:220,cx:110,cy:110,L:96,Rd:0,Rl:0,fs:0},
+  mini:{w:480,h:440,cx:240,cy:222,L:112,Rd:126,Rl:140,fs:22},
   deco:{w:480,h:480,cx:240,cy:240,L:220,Rd:0,Rl:0,fs:0}
 };
 function lblPos(a,R,fs,nLines){
@@ -559,7 +586,7 @@ function Flower(host,key,o){
   var svg=s('svg',{viewBox:'0 0 '+G.w+' '+G.h,'class':'flower '+kind+(o.interactive?' interactive':''),role:'img','aria-label':o.aria||Q[key].title},host);
   var g=s('g',{transform:'translate('+G.cx+' '+G.cy+')'},svg);
   var parts=[], vis=false, cur=null, bloomed=false;
-  var fs=G.fs&&window.innerWidth<560?26:G.fs, Rl=G.Rl+(fs-G.fs);
+  var fs=(kind==='full'&&window.innerWidth<560)?26:G.fs, Rl=G.Rl+(fs-G.fs);
   cats.forEach(function(c,i){
     var a=360*i/n, r=a*Math.PI/180, p={a:a,sx:Math.sin(r),cy:-Math.cos(r)};
     if(G.Rd) s('line',{x1:0,y1:0,x2:G.Rd*p.sx,y2:G.Rd*p.cy,'class':'guide'},g);
@@ -650,27 +677,110 @@ function insightFor(key,parts){
   return '‘줄었다’는 뜻으로 답한 사람은 '+join(parts.map(function(p){return p.st.counts[0]+'/'+p.sg.n+'명'}))+'입니다(분모는 답하지 않은 사람을 포함한 그룹 전체 인원).'+cau;
 }
 
-/* ---------- 직접 쓴 답변 ---------- */
-var WALL={story:{limit:8},ex:{limit:8}};
-function renderVoices(id,rows,catFilter){
-  var wall=$('#wall-'+id), more=$('#more-'+id), lim=WALL[id].limit, note=$('#'+(id==='ex'?'ex-note':'vnote-story'));
-  var withText=rows.filter(function(r){return r.c!==3});
-  var list=withText.filter(function(r){return catFilter<0||r.c===catFilter});
-  var shown=list.slice(0,lim);
-  wall.replaceChildren.apply(wall,shown.map(function(r){
-    return h('blockquote',{'class':'voice'},h('p',null,r.x),h('footer',null,'참여자 '+r.n+' · 분류: '+DIR_NAMES[r.c]));
-  }));
-  more.hidden=list.length<=lim;
-  var base='직접 쓴 답변 '+withText.length+'개를 참여자 번호 순으로 보여 드려요. 분류는 원문을 읽고 만든 사람이 나눈 것이고, 원문은 고치지 않았습니다.';
-  if(catFilter===3) base='‘답하지 않음’은 비어 있는 칸이라 보여 드릴 답변이 없어요.';
-  else if(catFilter>=0) base='‘'+DIR_NAMES[catFilter]+'’'+euro(DIR_NAMES[catFilter])+' 나눈 답변 '+list.length+'개만 보고 있어요.';
-  if(note) note.textContent=base+(list.length>lim?' ('+shown.length+'/'+list.length+'개 표시)':'');
+/* ---------- 직접 쓴 답변 (벚꽃 가지) ---------- */
+var TW=760, TH=540;
+function tbez(P,t){var u=1-t;return [u*u*u*P[0][0]+3*u*u*t*P[1][0]+3*u*t*t*P[2][0]+t*t*t*P[3][0],u*u*u*P[0][1]+3*u*u*t*P[1][1]+3*u*t*t*P[2][1]+t*t*t*P[3][1]]}
+function tbranch(parent,P,w0,w1,n,R){
+  n=n||40; var pts=[],L=[],Rt=[],i;
+  for(i=0;i<=n;i++) pts.push(tbez(P,i/n));
+  for(i=0;i<=n;i++){
+    var q=pts[Math.min(i+1,n)],o=pts[Math.max(i-1,0)],dx=q[0]-o[0],dy=q[1]-o[1],d=Math.sqrt(dx*dx+dy*dy)||1,nx=-dy/d,ny=dx/d;
+    var w=(w0+(w1-w0)*Math.pow(i/n,.8))/2+((i>0&&i<n)?(R()-.5)*.8*(w0/30):0);
+    L.push([pts[i][0]+nx*w,pts[i][1]+ny*w]); Rt.push([pts[i][0]-nx*w,pts[i][1]-ny*w]);
+  }
+  var poly=L.concat(Rt.reverse()), dd='M'+poly.map(function(q){return q[0].toFixed(1)+' '+q[1].toFixed(1)}).join(' L')+'Z';
+  s('path',{d:dd,'class':'bark'},parent);
+  return pts;
+}
+function tat(pts,t){return pts[Math.round(t*(pts.length-1))]}
+function ttwig(parent,pts,t,dx,dy,w,R){
+  var s0=tat(pts,t),e=[s0[0]+dx,s0[1]+dy];
+  tbranch(parent,[s0,[s0[0]+dx*.3+dy*.12,s0[1]+dy*.3-dx*.12],[s0[0]+dx*.7,s0[1]+dy*.75],e],w,1.2,20,R);
+  return e;
+}
+var PET='M0 0C-5.5 -3 -7 -9.5 -4.2 -13.2C-2.6 -15.2 -1 -14.4 0 -13C1 -14.4 2.6 -15.2 4.2 -13.2C7 -9.5 5.5 -3 0 0Z';
+function buildTreeSVG(){
+  var svg=s('svg',{viewBox:'0 0 '+TW+' '+TH,'class':'tree',role:'img','aria-label':'직접 쓴 답변을 벚꽃으로 나타낸 가지'});
+  var R=mulberry(11), g=s('g',{},svg), bk=s('g',{},g);
+  var main=tbranch(bk,[[-30,318],[90,300],[250,262],[390,236]],40,15,40,R);
+  var lng=tbranch(bk,[[385,237],[480,215],[590,172],[700,128]],15,2.5,40,R);
+  var up=tbranch(bk,[tat(main,.55),[190,215],[245,140],[300,72]],17,3,40,R);
+  var dn=tbranch(bk,[tat(main,.82),[380,280],[470,318],[560,372]],10,2.2,40,R);
+  var A=[ttwig(bk,lng,.18,10,-58,4.5,R),ttwig(bk,lng,.40,34,-52,4,R),ttwig(bk,lng,.52,28,40,3.5,R),ttwig(bk,lng,.72,20,-50,3,R),tat(lng,1),ttwig(bk,lng,.30,-6,44,3.5,R)];
+  var B=[tat(up,1),ttwig(bk,up,.62,-44,-14,3,R)];
+  var C=[tat(dn,1),ttwig(bk,dn,.55,16,-36,2.5,R)];
+  var deco=s('g',{'class':'deco'},g), fallen=s('g',{'class':'fallen'},g), canopy=s('g',{'class':'canopy'},g);
+  return {svg:svg,canopy:canopy,fallen:fallen,deco:deco,groups:{},fallenGroup:null,
+    slots:[{sites:A,big:true,lab:[640,60,'middle']},{sites:B,big:false,lab:[300,30,'middle']},{sites:C,big:false,lab:[560,410,'middle']}]};
+}
+function tflower(parent,x,y,r,rot,tone,R){
+  var g=s('g',{transform:'translate('+x.toFixed(1)+' '+y.toFixed(1)+') rotate('+rot.toFixed(0)+') scale('+(r/13.5).toFixed(2)+')'},parent);
+  for(var k=0;k<5;k++) s('path',{d:PET,transform:'rotate('+(k*72)+')','class':'pet t'+tone},g);
+  s('circle',{r:3.4,'class':'eye'},g);
+  for(k=0;k<7;k++){var a=(k*51+(R()-.5)*16)*Math.PI/180,rr=3.8+R()*1.8;s('circle',{cx:(Math.cos(a)*rr).toFixed(1),cy:(Math.sin(a)*rr).toFixed(1),r:.9,'class':'stm'},g)}
+  return g;
+}
+function tleaf(parent,x,y,rot,sc){var g=s('g',{transform:'translate('+x.toFixed(1)+' '+y.toFixed(1)+') rotate('+rot.toFixed(0)+') scale('+sc.toFixed(2)+')'},parent);s('path',{d:'M0 0C4 -3 5 -9 0 -15C-5 -9 -4 -3 0 0Z','class':'gleaf'},g);s('path',{d:'M0 -1L0 -13','class':'gvein'},g)}
+function tbud(parent,x,y,rot){var g=s('g',{transform:'translate('+x.toFixed(1)+' '+y.toFixed(1)+') rotate('+rot.toFixed(0)+')'},parent);s('ellipse',{cx:0,cy:-5,rx:3.2,ry:5,'class':'bud'},g);s('path',{d:'M-2.4 -1.5Q0 1 2.4 -1.5L0 1.5Z','class':'gleaf'},g)}
+function buildTreeLeaves(tc,rows,onSelect,selRef){
+  tc.canopy.replaceChildren(); tc.fallen.replaceChildren(); tc.deco.replaceChildren(); tc.groups={}; selRef.el=null;
+  var counts=[0,1,2].map(function(c){return rows.filter(function(r){return r.c===c}).length});
+  var order=[0,1,2].sort(function(a,b){return counts[b]-counts[a]||a-b});
+  var max=Math.max.apply(null,counts.concat([1]));
+  order.forEach(function(cat,si){
+    var cnt=counts[cat]; if(cnt<=0) return;
+    var slot=tc.slots[si], R=mulberry(101+si*17), rr=rows.filter(function(r){return r.c===cat});
+    var nS=Math.min(slot.sites.length,Math.max(1,Math.ceil(cnt/(slot.big?4:2)))), per=[], i, k=0;
+    for(i=0;i<nS;i++) per.push(Math.floor(cnt/nS)+(i<cnt%nS?1:0));
+    var r=11.5+2.5*Math.sqrt(cnt/max), spread=Math.min(20,8+2.2*Math.max.apply(null,per));
+    var grp=s('g',{'class':'catgroup'},tc.canopy), items=[];
+    s('text',{x:slot.lab[0],y:slot.lab[1],'text-anchor':slot.lab[2],'class':'cap'},grp).textContent=DIR_SHORT[cat]+' '+cnt+'명';
+    per.forEach(function(n,si2){
+      var c=slot.sites[si2];
+      for(var j=0;j<n;j++){
+        var a=(j/n)*Math.PI*2+(R()-.5)*.8, d=n>1?spread*(.35+.65*R()):0;
+        items.push({row:rr[k++],x:c[0]+Math.cos(a)*d,y:c[1]+Math.sin(a)*d*.75-2,rot:R()*72,tone:[0,0,1,1,2][Math.floor(R()*5)],sz:r*(.9+R()*.18)});
+      }
+      for(j=0;j<2;j++){var a2=R()*Math.PI*2;tleaf(tc.deco,c[0]+Math.cos(a2)*(spread+6),c[1]+Math.sin(a2)*(spread+4),a2*180/Math.PI+90,.8+R()*.3)}
+      if(R()<.8){var a3=R()*Math.PI*2;tbud(tc.deco,c[0]+Math.cos(a3)*(spread+9),c[1]+Math.sin(a3)*(spread+7),a3*180/Math.PI+90)}
+    });
+    items.sort(function(p,q){return p.y-q.y}).forEach(function(it){
+      var fg=tflower(grp,it.x,it.y,it.sz,it.rot,it.tone,R);
+      fg.setAttribute('class','bloom'); fg.setAttribute('tabindex','0'); fg.setAttribute('role','button'); fg.setAttribute('aria-label','참여자 '+it.row.n+'의 답변 읽기');
+      s('circle',{r:15,'class':'hit'},fg);
+      function pick(){if(selRef.el)selRef.el.classList.remove('sel');fg.classList.add('sel');selRef.el=fg;selRef.row=it.row;onSelect(it.row)}
+      fg.addEventListener('click',pick);
+      fg.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();pick()}});
+    });
+    tc.groups[cat]=grp;
+  });
+  var blank=rows.filter(function(r){return r.c===3}).length;
+  if(blank>0){
+    var R2=mulberry(919), fg=s('g',{},tc.fallen);
+    for(var b=0;b<blank;b++){
+      var x=330+(b%13)*30+(R2()-.5)*24+Math.floor(b/13)*12, y=460+Math.sin(b*1.3)*16+(R2()-.5)*14;
+      s('path',{d:PET,transform:'translate('+x.toFixed(1)+' '+y.toFixed(1)+') rotate('+(R2()*360).toFixed(0)+') scale(.85)','class':'pet fallenpet'},fg);
+    }
+    s('text',{x:520,y:522,'text-anchor':'middle','class':'cap'},fg).textContent='답하지 않음 '+blank+'명 · 떨어진 꽃잎';
+    tc.fallenGroup=fg;
+  } else tc.fallenGroup=null;
+  return true;
+}
+function setTreeActive(tc,activeCat){
+  Object.keys(tc.groups).forEach(function(k){tc.groups[k].classList.toggle('dim',activeCat>=0&&Number(k)!==activeCat)});
+  if(tc.fallenGroup) tc.fallenGroup.classList.toggle('dim',activeCat>=0&&activeCat!==3);
+}
+function setQuote(elId,row){
+  var el=$('#'+elId); if(!el) return;
+  if(!row){el.className='quote-panel empty';el.textContent='꽃을 눌러 답변을 읽어보세요.';return}
+  el.className='quote-panel';
+  el.replaceChildren(h('p',null,'“'+row.x+'”'),h('footer',null,'참여자 '+row.n+' · 분류: '+DIR_SHORT[row.c]));
 }
 
 /* ---------- 상태 ---------- */
 var S={view:'story',q:'freq',seg:0,hover:-1,pin:-1,ch:0,off:{},art:document.documentElement.getAttribute('data-art')||'basic'};
 KEYS.forEach(function(k){S.off[k]=new Set()});
-var FL={hero:null,story:{},mini:{},ex:{}}, SEQ=['hero','ch-freq','ch-purpose','ch-dep','ch-dir','ch-end'];
+var FL={hero:null,story:{},mini:{},ex:{}}, TREE={}, SEQ=['hero','ch-freq','ch-purpose','ch-dep','ch-dir','ch-end'];
 var RN=['생각이 피는 모양'].concat(KEYS.map(function(k){return Q[k].short}),['읽는 법']);
 
 /* ---------- 이야기 ---------- */
@@ -681,7 +791,7 @@ function buildStory(){
   KEYS.forEach(function(key,qi){
     var q=Q[key], nextId=SEQ[qi+2], segs=segsFor(key).slice(1);
     var petal=s('svg',{viewBox:'0 0 60 20',width:60,height:20,'aria-hidden':'true'}); s('path',{d:'M2 10C16 1 44 2 58 10C44 18 16 19 2 10Z',fill:'url(#pgH)'},petal); s('path',{d:'M7 10C22 8.6 42 8.6 54 10',fill:'none',stroke:'currentColor','stroke-opacity':.35,'stroke-width':.8,'stroke-linecap':'round'},petal);
-    var cmp=h('div',{'class':'compare',style:'grid-template-columns:repeat('+segs.length+',1fr)'});
+    var cmp=h('div',{'class':'compare',style:'grid-template-columns:repeat('+Math.min(segs.length,2)+',1fr)'});
     segs.forEach(function(sg,i){
       var host=h('span',{'class':'mh',id:'mh-'+key+'-'+i}), cap=h('span',{'class':'cap',id:'cap-'+key+'-'+i});
       cmp.append(h('button',{'class':'mini-fig',onclick:function(){openExplore(key,i+1)},'aria-label':'탐색 화면에서 '+sg.name+' 보기'},host,cap));
@@ -698,15 +808,19 @@ function buildStory(){
         cmp,
         h('p',{'class':'insight',id:'ins-'+key}),
         key==='dir'?h('div',{'class':'voices-block'},
-          h('h3',null,'직접 쓴 답변 (원문 그대로)'),
-          h('p',{'class':'vnote',id:'vnote-story'}),
-          h('div',{'class':'voices',id:'wall-story'}),
-          h('button',{'class':'btn ghost more',id:'more-story',onclick:function(){WALL.story.limit+=8;renderVoices('story',ROWS,-1)}},'답변 더 보기')):null,
+          h('h3',null,'직접 쓴 답변, 벚꽃 가지로'),
+          h('p',{'class':'vnote'},'벚꽃 한 송이가 답변 하나예요. 꽃이 많고 클수록 그 갈래를 고른 사람이 많다는 뜻이고(정확한 비율은 아니에요), 답을 비워 둔 '+ROWS.filter(function(r){return r.c===3}).length+'명은 가지 아래 떨어진 꽃잎으로 나타냈어요. 초록 잎과 꽃봉오리는 장식이에요. 꽃을 눌러 읽어보세요.'),
+          h('div',{'class':'tree-wrap',id:'tree-story'}),
+          h('p',{'class':'quote-panel empty',id:'quote-story'},'꽃을 눌러 답변을 읽어보세요.')):null,
         h('button',{'class':'next-ch','data-scroll':nextId},'다음 장으로')
       ));
     root.append(sec);
     FL.story[key]=Flower($('#fw-'+key),key,{kind:'full'});
     FL.mini[key]=segs.map(function(sg,i){return Flower($('#mh-'+key+'-'+i),key,{kind:'mini',aria:sg.name+' '+q.short})});
+    if(key==='dir'){
+      var tcS=buildTreeSVG(); $('#tree-story').append(tcS.svg); TREE.story={c:tcS,sel:{}};
+      buildTreeLeaves(tcS,ROWS,function(row){setQuote('quote-story',row)},TREE.story.sel);
+    }
   });
 }
 function fillStory(){
@@ -716,13 +830,12 @@ function fillStory(){
     FL.story[key].update({vals:st.shares,texts:labelTexts(st),off:null,active:-1});
     var parts=segsFor(key).slice(1).map(function(sg){var rows=ROWS.filter(sg.test);return {sg:sg,rows:rows,st:tally(rows,key)}});
     parts.forEach(function(p,i){
-      FL.mini[key][i].update({vals:p.st.shares});
+      FL.mini[key][i].update({vals:p.st.shares,texts:labelTexts(p.st)});
       $('#cap-'+key+'-'+i).replaceChildren(h('strong',null,p.sg.name),p.sg.n+'명 · 최다 '+topName(key,p.st));
     });
     $('#lede-'+key).innerHTML=ledeFor(key,st);
     $('#ins-'+key).textContent=insightFor(key,parts);
   });
-  renderVoices('story',ROWS,-1);
 }
 
 /* ---------- 탐색 ---------- */
@@ -737,7 +850,7 @@ function buildExplore(){
       onPick:function(i){S.pin=S.pin===i?-1:i;S.hover=-1;refreshActive()},
       onToggle:function(i){var o=S.off[key];o.has(i)?o.delete(i):o.add(i);if(S.pin===i)S.pin=-1;refreshActive()}});
   });
-  $('#more-ex').addEventListener('click',function(){WALL.ex.limit+=8;refreshActive()});
+  var tcE=buildTreeSVG(); $('#tree-ex').append(tcE.svg); TREE.ex={c:tcE,sel:{}};
 }
 function renderExplore(){
   var key=S.q, q=Q[key], segs=segsFor(key);
@@ -751,6 +864,11 @@ function renderExplore(){
   $('#ex-title').textContent=q.title;
   $('#ex-sub').textContent=segs[S.seg].name+' · 응답 '+st.n+'명';
   KEYS.forEach(function(k){$('#exh-'+k).hidden=k!==key});
+  if(key==='dir'){
+    TREE.ex.sel={};
+    buildTreeLeaves(TREE.ex.c,rows,function(row){setQuote('quote-ex',row)},TREE.ex.sel);
+    setQuote('quote-ex',null);
+  }
   refreshActive();
 }
 function refreshActive(){
@@ -761,7 +879,7 @@ function refreshActive(){
   if(active>=0){ro.innerHTML='<b>'+esc(nm[active])+'</b> · '+st.n+'명 중 '+st.counts[active]+'명 ('+pct(st.shares[active])+')'}
   else{var t=argmax(st.counts);ro.innerHTML='가장 큰 꽃잎 · <b>'+esc(nm[t])+'</b> '+st.n+'명 중 '+st.counts[t]+'명 ('+pct(st.shares[t])+')'}
   var vb=$('#ex-voices'); vb.hidden=key!=='dir';
-  if(key==='dir') renderVoices('ex',EXC.rows,S.pin);
+  if(key==='dir') setTreeActive(TREE.ex.c,S.pin);
 }
 function openExplore(key,segIdx){S.q=key;S.seg=segIdx||0;S.hover=-1;S.pin=-1;go('explore')}
 
